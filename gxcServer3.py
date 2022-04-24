@@ -49,20 +49,6 @@ def updateResponse():
     return responseHeader,responseBody
 
 
-# def getIcon(message):
-#     try:
-#         f = open('icon.png', 'rb')
-#         responseBody = f.read()
-#         f.close()
-#         responseHeader = "HTTP/1.1 200 OK\r\n\r\n".encode()
-#
-#     except IOError:
-#         responseHeader = "HTTP/1.1 404 Not Found\r\n\r\n".encode()
-#         responseBody = "404 icon Not Found".encode()
-#
-#     return responseHeader, responseBody
-
-
 def getPor(notification=''):
     responseHeader,responseBody=updateResponse()
     portfolio = []
@@ -380,9 +366,6 @@ def process(connectionSocket):
                     responseHeader, responseBody = getGraph(body)
                     info=getDetail(body)
                     addInfo(info)
-
-            # elif resource == "favicon.ico":
-            #     responseHeader, responseBody = getIcon(message)
             else:
                 responseHeader = "HTTP/1.1 404 Not Found\r\n\r\n".encode()
                 responseBody = "404 Not Found".encode()
