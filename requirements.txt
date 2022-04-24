@@ -1,0 +1,5 @@
+beautifulsoup4==4.9.3
+bs4==0.0.1
+certifi==2021.10.8
+pycurl==7.43.0.6
+soupsieve==2.2.1

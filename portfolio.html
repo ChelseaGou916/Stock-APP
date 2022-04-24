@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Your portfolio</title>
+
+    <style>
+      table{
+        border-collapse: collapse;
+      }
+
+      td{
+        width: 120px;
+        border: 1px solid black;
+      }
+
+      #form-wrapper{
+        margin-top: 60px;
+      }
+
+      #form-wrapper label{
+        display: inline-block;
+        width: 100px;
+        margin-bottom: 10px;
+      }
+
+      p{
+        color:red;
+      }
+
+      input{
+        width: 200px;
+      }
+    </style>
+
+  </head>
+  <body>
+    <section id='main-wrapper'>
+
+      <div id='table-wrapper'>
+        <table id='table'>
+          <tr>
+            <td>Stock</td>
+            <td>Quantity</td>
+            <td>Price</td>
+            <td>Gain/Loss</td>
+          </tr>
+        </table>
+      </div>
+
+      <div id='form-wrapper'>
+        <p id='notification'></p>
+        <form id="form" method="post">
+          <label for="symbol">Stock symbol</label>
+          <input type="text" name="symbol" id="symbol" maxlength="10" minlength="1" list='candidates'><br>
+          <datalist id="candidates">
+          </datalist>
+          <label for="quantity">Quantity</label>
+          <input type="text" name="quantity" id="quantity" maxlength="10" minlength="1" pattern="^(\+|-)?[1-9]+[0-9]*$" placeholder="Signed integer"><br>
+          <label for="price">Price</label>
+          <input type="text" name="price" id="price" maxlength="10" minlength="1" pattern="^(?:[1-9]\d*|0)?(?:\.\d+)?$" placeholder="Positive integer or float"><br>
+
+          <button type='reset' name='Reset'>reset</button>
+          <button type='submit' name='Update' value='Update'>update</button>
+        </form>
+      </div>
+
+    </section>
+  </body>
+</html>

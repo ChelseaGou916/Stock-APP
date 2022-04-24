@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Stock Graph</title>
+    <script type="text/javascript">
+      function on_submit(event) {
+        event.preventDefault();
+        value = document.getElementById('symbol').value.trim();
+
+        fetch("/research", {
+          method: "POST",
+          body: value
+        }).then(response => {
+          if(response.clone().status==400){
+            throw new Error('Stock symbol is not a valid common stock symbol.')
+          }
+          return data = response.json();
+
+        }).then(data => {
+          document.getElementById('notification').innerHTML = ''
+          const dps = [];
+          for(i = 0; i<data.length; i++){
+            dps.push({x: new Date(data[i].date), y: data[i].closePrice})
+          }
+          draw(dps, value)
+
+        }).catch(error => {
+          document.getElementById('notification').innerHTML = error.message;
+          document.getElementById('chart-container').innerHTML = '';
+        });
+      }
+
+      function draw(dps, value){
+        var chart = new CanvasJS.Chart("chart-container", {
+        	animationEnabled: true,
+          axisX: {
+			      labelFormatter: function (e) {
+				      return CanvasJS.formatDate( e.value, "YYYY");
+			      },
+		      },
+        	data: [{
+        		type: "line",
+              	indexLabelFontSize: 16,
+        		dataPoints: dps
+        	}]
+        });
+        chart.render();
+      }
+
+
+    </script>
+
+  </head>
+  <body>
+    <section id='main-wrapper'>
+      <div id='form-wrapper'>
+        <p id='notification'></p>
+        <form id="form" action="/research" method="post" onsubmit="on_submit(event); return false;">
+          <label for="symbol">Stock symbol</label>
+          <input type="text" name="symbol" id="symbol" maxlength="10" minlength="1" list='candidates'><br>
+          <datalist id="candidates">
+          </datalist>
+        </form>
+      </div>
+
+      <div id='chart-container' style="height: 380px; max-width: 910px; margin: 0px auto; margin-top: 30px"></div>
+      <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+    </section>
+  </body>
+</html>
